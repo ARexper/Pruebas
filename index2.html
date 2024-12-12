@@ -1,0 +1,36 @@
+        transition: transform 0.3s ease;
+        }
+        .header.hidden {
+            transform: translateY(-100%);
+        }
+        iframe {
+            display: block;
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+        .header img {
+            max-width: 90%; /* Ajustar el ancho máximo */
+            max-height: 90%; /* Ajustar la altura máxima */
+            object-fit: contain; /* Asegurar que la imagen se ajuste sin distorsión */
+        }
+    </style>
+</head>
+<body>
+    <div class="header" id="header">
+        <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=xdypcwkw&dl=1" alt="Mi Marca">
+    </div>
+    <iframe 
+        src="https://mywebar.com/p/Project_10_fntso1carf" 
+        id="arViewer"
+        allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+    </iframe>
+
+    <script>
+        // Ocultar la cabecera después de 8 segundos
+        setTimeout(function() {
+            document.getElementById('header').classList.add('hidden');
+        }, 10000);  // 10000 milisegundos = 10 segundos
+    </script>
+</body>
+</html>
