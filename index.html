@@ -9,49 +9,95 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-        }
-        .header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50vh; /* La mitad de la altura de la pantalla */
-            background: #000;
-            color: #fff;
+            height: 100vh; /* Ocupa toda la altura de la pantalla */
             display: flex;
-            flex-direction: column;
-            justify-content: center; /* Centrado vertical */
-            align-items: center;     /* Centrado horizontal */
-            z-index: 100;
-            transition: transform 0.3s ease;
+            justify-content: center;
+            align-items: center;
         }
-        .header.hidden {
-            transform: translateY(-100%);
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
         iframe {
             display: block;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             border: none;
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh; /* Ocupa toda la pantalla visible */
+            z-index: 100; /* Superposición por encima del iframe */
+            background-color: transparent; /* Elimina cualquier oscurecimiento */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* Permite interacciones con elementos detrás */
+        }
+        .image-overlay img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Imagen a pantalla completa sin deformarse */
+            object-position: top; /* Asegura que la parte superior de la imagen sea visible */
+        }
+        .loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 102;
+            display: none;
+        }
+        .image-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
         }
     </style>
 </head>
 <body>
-    <div class="header" id="header">
-        <h1>Mi Marca</h1>
-        <p>Explora este modelo en AR</p>
+    <div class="container">
+        <!-- Visor AR -->
+        <iframe 
+            src="https://mywebar.com/p/Project_5_9fgvkx8pgt" 
+            id="arViewer"
+            allow="camera; gyroscope; accelerometer; magnetometer; xr-spatial-tracking; microphone;">
+        </iframe>
+
+        <!-- Imagen superpuesta -->
+        <div class="image-overlay" id="imageOverlay">
+            <img src="https://www.dropbox.com/scl/fi/oh9af9si4mjvf9bfrimu3/Portada-Minka.png?rlkey=7hxru5l5g6b9pl9uw51uc4dn4&st=mrvnvlsg&dl=1" alt="Portada">
+        </div>
+
+        <!-- Mensaje de carga -->
+        <div class="loading-message" id="loadingMessage">Espere, cargando el servidor...</div>
     </div>
-    <iframe 
-        src="https://mywebar.com/p/Project_5_9fgvkx8pgt" 
-        id="arViewer"
-        allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
-    </iframe>
 
     <script>
-        // Ocultar la cabecera después de 5 segundos (ajusta el tiempo según sea necesario)
-        setTimeout(function() {
-            document.getElementById('header').classList.add('hidden');
-        }, 8000);  // 8000 milisegundos = 8 segundos
+        const imageOverlay = document.getElementById('imageOverlay');
+        const loadingMessage = document.getElementById('loadingMessage');
+
+        // Muestra el mensaje de carga después de 7 segundos
+        setTimeout(() => {
+            loadingMessage.style.display = 'block';
+        }, 9000); // 7 segundos
+
+        // Oculta la imagen después de 12 segundos
+        setTimeout(() => {
+            imageOverlay.classList.add('hidden');
+            setTimeout(() => {
+                loadingMessage.style.display = 'none';
+            }, 3000); // Oculta el mensaje después de 5 segundos
+        }, 12000); // 12 segundos
     </script>
 </body>
 </html>
